@@ -167,8 +167,7 @@ avoid3Nades()
 	frag_granade_stock = self GetWeaponAmmoStock("frag_grenade_mp");
 
 	// set missle launcher stock to 0 so will have just 1 missle
-	rpg_stock = self GetWeaponAmmoStock("rpg_mp");
-	self setWeaponAmmoStock( rpg_stock, 0 );
+	self setWeaponAmmoStock('rpg_mp', 0);
 
 	if (sg_concussion_stock == 3)
 	{
