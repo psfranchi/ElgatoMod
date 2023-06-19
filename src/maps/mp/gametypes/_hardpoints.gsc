@@ -141,10 +141,11 @@ onPlayerSpawned()
 		// {
 		// 	self setActionSlot( 3, "" );
 		// }
+		if (getDvarInt("scr_less_explosives")) {
+			self avoid3Nades();
+			//self removeExtraGlAmmo();
+		}
 
-		self avoid3Nades();
-		self removeExtraGlAmmo();
-		//self thread watchWeaponChange();
 	}
 }
 
@@ -167,8 +168,9 @@ avoid3Nades()
 	frag_granade_stock = self GetWeaponAmmoStock("frag_grenade_mp");
 
 	// set missle launcher stock to 0 so will have just 1 missle
-	self setWeaponAmmoStock("rpg_mp", 0);
-
+	//self setWeaponAmmoClip("rpg_mp", 1);
+    //self setWeaponAmmoClip("claymore_mp", 1);
+	//self setWeaponAmmoClip("c4_mp", 1);
 	if (sg_concussion_stock == 3)
 	{
 		self setWeaponAmmoStock( "concussion_grenade_mp", 1 );
@@ -188,21 +190,21 @@ avoid3Nades()
 	}
 }
 
-watchWeaponChange()
-{
-	self endon("death");
-	self endon("disconnect");
+// watchWeaponChange()
+// {
+// 	self endon("death");
+// 	self endon("disconnect");
 
-	while(1)
-	{
-		self waittill( "weapon_change", newWeapon );
-		current = self getCurrentWeapon();
-		if ( isSubStr( current, "gl_" ) )
-		{
-			self setActionSlot( 3, "" );
-		}
-	}
-}
+// 	while(1)
+// 	{
+// 		self waittill( "weapon_change", newWeapon );
+// 		current = self getCurrentWeapon();
+// 		if ( isSubStr( current, "gl_" ) )
+// 		{
+// 			self setActionSlot( 3, "" );
+// 		}
+// 	}
+// }
 
 onClassChange()
 {
@@ -226,8 +228,10 @@ onClassChange()
 			)
 			{
 				self waittill( "weapon_change", newWeapon );
-				self avoid3Nades();
-				self removeExtraGlAmmo();
+				if (getDvarInt("scr_less_explosives")) {
+					self avoid3Nades();
+					//self removeExtraGlAmmo();
+				}
 			}
 
 		}
